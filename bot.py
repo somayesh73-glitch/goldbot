@@ -14,11 +14,11 @@ TOKEN = os.environ.get("BOT_TOKEN")
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "سلام 🌟
+        "Hello 🌟
 "
-        "من ربات مشاور بازار طلا هستم.
+        "I am the Gold Market Advisor bot.
 "
-        "برای دریافت قیمت جاری، از دستور /price استفاده کنید."
+        "Use /price to see the current gold price."
     )
 
 async def price(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -27,32 +27,32 @@ async def price(update: Update, context: ContextTypes.DEFAULT_TYPE):
         data = response.json()
         gold_price = data[0]["gold"]  # USD per ounce
 
-        # تحلیل ساده سیگنال
+        # Simple signal logic
         if gold_price > 2000:
-            signal = "📈 خرید"
+            signal = "📈 Buy"
         else:
-            signal = "📉 فروش"
+            signal = "📉 Sell"
 
         now_tehran = datetime.now(pytz.timezone("Asia/Tehran")).strftime("%Y-%m-%d %H:%M")
 
         await update.message.reply_text(
-            f"قیمت لحظه‌ای طلا: {gold_price} دلار
+            f"Current Gold Price: {gold_price} USD
 "
-            f"سیگنال: {signal}
+            f"Signal: {signal}
 "
-            f"زمان (تهران): {now_tehran}"
+            f"Time (Tehran): {now_tehran}"
         )
 
     except Exception as e:
         logging.error(e)
-        await update.message.reply_text("❌ خطا در دریافت قیمت طلا")
+        await update.message.reply_text("❌ Error fetching gold price.")
 
 def main():
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("price", price))
 
-    print("✅ بات راه‌اندازی شد...")
+    print("✅ Bot is running...")
     app.run_polling()
 
 if name == "main":
