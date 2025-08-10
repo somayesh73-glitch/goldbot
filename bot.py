@@ -2,9 +2,7 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 import datetime
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("Hello 🌟
-I am the Gold Market Advisor bot.Use /price to see the current gold price.")
-
+    await update.message.reply_text("Hello 🌟I am the Gold Market Advisor bot.Use /price to see the current gold price.")
 async def price(update: Update, context: ContextTypes.DEFAULT_TYPE):
     gold_price = 1923.45  # Example price
     signal = "Buy"  # Example signal
